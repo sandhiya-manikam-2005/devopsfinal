@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🚀 GitGraph Project Timeline</title>
+  <script src="https://cdn.jsdelivr.net/npm/@gitgraph/js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 30px;
+    }
+    h2 {
+      color: #58a6ff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #graph {
+      height: 700px;
+      border: 2px solid #30363d;
+      border-radius: 12px;
+      background-color: #161b22;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🚧 Git Commit Timeline – Project Progress</h2>
+  <div id="graph"></div>
+
+  <script>
+    const graphContainer = document.getElementById("graph");
+    const gitgraph = GitgraphJS.createGitgraph(graphContainer, {
+      template: GitgraphJS.templateExtend("metro", {
+        colors: ["#58a6ff", "#ffa657", "#a5d6ff", "#f85149"],
+        commit: {
+          message: {
+            displayHash: false,
+            displayAuthor: false,
+            font: "normal 12pt Arial",
+          },
+        },
+      }),
+    });
+
+    // Main branch
+    const main = gitgraph.branch("main");
+    main.commit("🎉 Project initialized");
+
+    // Login feature branch
+    const login = main.branch("login-feature");
+    login.commit("🔐 Designed login UI");
+    login.commit("🧠 Connected login logic");
+
+    // Signup feature branch
+    const signup = main.branch("signup-feature");
+    signup.commit("📝 Created signup form");
+
+    // Bugfix directly on main
+    main.commit("🐞 Fixed homepage typo");
+
+    // Merge branches back to main
+    main.merge(login, "✅ Login feature merged");
+    main.merge(signup, "✅ Signup feature merged");
+
+    // Final Release
+    main.commit("🚀 Launched v1.0");
+  </script>
+</body>
+</html>
